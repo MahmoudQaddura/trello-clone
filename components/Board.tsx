@@ -13,7 +13,6 @@ function Board() {
   }, [getBoard]);
 
   const handleOnDragEnd = (result: DropResult) => {};
-  console.log(board.columns.entries());
 
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
