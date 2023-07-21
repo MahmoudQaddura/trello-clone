@@ -10,7 +10,7 @@ type Props = {
 
 const idToColumnText: { [key in TypedColumn]: string } = {
   todo: "To Do",
-  inprogress: "In Progress",
+  inProgress: "In Progress",
   done: "Done",
 };
 
