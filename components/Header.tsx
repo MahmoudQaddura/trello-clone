@@ -1,8 +1,28 @@
 "use client";
+import debounce from "lodash.debounce";
 import Image from "next/image";
 import { MagnifyingGlassIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import Avatar from "react-avatar";
+import { useBoardStore } from "@/store/BoardStore";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 function Header() {
+  const [searchString, setSearchString] = useBoardStore((state) => [
+    state.searchString,
+    state.setSearchString,
+  ]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchString(e.target.value);
+  };
+  const debouncedChangeHandler = useMemo(
+    () => debounce(handleChange, 1000),
+    [searchString]
+  );
+  useEffect(() => {
+    return () => {
+      debouncedChangeHandler.cancel();
+    };
+  }, []);
   return (
     <header>
       <div
@@ -26,6 +46,7 @@ function Header() {
           >
             <MagnifyingGlassIcon className="h-6 w-6 text-gray-500" />
             <input
+              onChange={debouncedChangeHandler}
               type="text"
               placeholder="search"
               className="flex-1 outline-none p-2 "
