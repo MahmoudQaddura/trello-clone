@@ -83,7 +83,7 @@ function Header() {
           />
           {suggestion && !loading
             ? suggestion
-            : "All the code for GPT is ready, but no API key unfortunetly. "}
+            : "All the code for GPT is ready, but there's no API key unfortunately."}
         </p>
       </div>
     </header>

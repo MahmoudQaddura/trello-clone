@@ -8,7 +8,11 @@ interface BoardState {
   setBoardState: (board: Board) => void;
   updateTodoInDB: (todo: Todo, columnId: TypedColumn) => void;
   searchString: string;
-  setSearchString:(searchString: string)=>void;
+  setSearchString: (searchString: string) => void;
+  newTaskInput: string;
+  newTaskType: TypedColumn;
+  setnewTaskInput: (input: string) => void;
+  setnewTaskType: (columnId: TypedColumn) => void;
 }
 
 export const useBoardStore = create<BoardState>((set) => ({
@@ -31,6 +35,10 @@ export const useBoardStore = create<BoardState>((set) => ({
       }
     );
   },
-  searchString:"",
-  setSearchString:(searchString)=>set({searchString}),
+  searchString: "",
+  setSearchString: (searchString) => set({ searchString }),
+  newTaskInput: "",
+  setnewTaskInput: (input: string) => set({ newTaskInput: input }),
+  setnewTaskType: (columnId: TypedColumn) => set({ newTaskType: columnId }),
+  newTaskType: "todo",
 }));
