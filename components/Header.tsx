@@ -4,12 +4,29 @@ import Image from "next/image";
 import { MagnifyingGlassIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import Avatar from "react-avatar";
 import { useBoardStore } from "@/store/BoardStore";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useState } from "react";
+import fetchSuggestion from "@/util/fetchSuggestion";
 function Header() {
-  const [searchString, setSearchString] = useBoardStore((state) => [
+  const [board, searchString, setSearchString] = useBoardStore((state) => [
+    state.board,
     state.searchString,
     state.setSearchString,
   ]);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [suggestion, setSuggestion] = useState<string>("");
+
+  useEffect(() => {
+    if (board.columns.size === 0) return;
+    setLoading(true);
+
+    const fetchSuggestionFunc = async () => {
+      //  const suggestion = await fetchSuggestion(board);          with working API key this should run
+      // setSuggestion(suggestion);
+      setLoading(false);
+    };
+    fetchSuggestionFunc();
+  }, [board]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchString(e.target.value);
@@ -39,7 +56,6 @@ function Header() {
           className="w-44 md:56 pb-10 md:pb-0 object-contain"
         />
         <div className="flex items-center space-x-5 flex-1 justify-end w-full">
-          {/* SEARCH */}
           <form
             action=""
             className="flex items-center space-x-5 bg-white rounded-md p-2 shadow-md flex-1 md:flex-initial"
@@ -60,8 +76,14 @@ function Header() {
 
       <div className="flex items-center justify-center px-5 py-2 md:py-5 ">
         <p className="flex items-center text-sm font-light p-5  shadow-xl rounded-xl w-fit bg-white italic max-w-3xl text-[#0055D1]">
-          <UserCircleIcon className="inline-block h-10 w-10 text-[#0055D1] mr-1 " />
-          GPT is summarizing your tasks...
+          <UserCircleIcon
+            className={`inline-block h-10 w-10 text-[#0055D1] mr-1 ${
+              loading && "animate-spin"
+            }`}
+          />
+          {suggestion && !loading
+            ? suggestion
+            : "All the code for GPT is ready, but no API key unfortunetly. "}
         </p>
       </div>
     </header>

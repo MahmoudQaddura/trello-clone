@@ -60,7 +60,6 @@ function Board() {
       const newColumns = new Map(board.columns);
       newColumns.set(startCol.id, newCol);
       newColumns.set(finishCol.id, { id: finishCol.id, todos: finishTodos });
-      console.log(finishCol.id);
       updateTodoInDB(todoMoved, finishCol.id);
       setBoardState({ ...board, columns: newColumns });
     }
