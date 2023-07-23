@@ -22,7 +22,7 @@ export const getTodosGroupedByColumn = async () => {
     return acc;
   }, new Map<TypedColumn, Column>());
 
-  const columnTypes: TypedColumn[] = ["todo", "inProgress", "done"];
+  const columnTypes: TypedColumn[] = ["todo", "inprogress", "done"];
 
   for (const columnType of columnTypes) {
     if (!columns.get(columnType)) {

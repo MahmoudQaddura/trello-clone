@@ -49,6 +49,7 @@ function Header() {
 
       <div className="flex flex-col md:flex-row items-center p-5 bg-gray-500/10 rounded-b-2xl  ">
         <Image
+          loading="lazy"
           src="https://links.papareact.com/c2cdd5"
           alt="Trello logo"
           width={300}
